@@ -1,33 +1,33 @@
-import { gamesForPlayer } from './utilities.js';
-
 import type { Game } from './types.js';
 
-function progressive(playerId: string, games: Game[]): number {
-  const sorted = gamesForPlayer(playerId, games).toSorted(
-    (a, b) => a.round - b.round,
-  );
+function playerResult(playerId: string, round: Game[]): number {
+  for (const g of round) {
+    if (g.whiteId === playerId) {
+      return g.result;
+    }
+    if (g.blackId === playerId) {
+      return 1 - g.result;
+    }
+  }
+  return 0;
+}
+
+function progressive(playerId: string, games: Game[][]): number {
   let cumulative = 0;
   let total = 0;
-  for (const g of sorted) {
-    cumulative += g.whiteId === playerId ? g.result : 1 - g.result;
+  for (const round of games) {
+    cumulative += playerResult(playerId, round);
     total += cumulative;
   }
   return total;
 }
 
-function progressiveCut1(playerId: string, games: Game[]): number {
-  const sorted = gamesForPlayer(playerId, games).toSorted(
-    (a, b) => a.round - b.round,
-  );
-  if (sorted.length === 0) {
-    return 0;
-  }
-  // Recalculate cumulative starting from round 2 (skip first round entirely)
-  let cum = 0;
+function progressiveCut1(playerId: string, games: Game[][]): number {
+  let cumulative = 0;
   let total = 0;
-  for (const g of sorted.slice(1)) {
-    cum += g.whiteId === playerId ? g.result : 1 - g.result;
-    total += cum;
+  for (const round of games.slice(1)) {
+    cumulative += playerResult(playerId, round);
+    total += cumulative;
   }
   return total;
 }
