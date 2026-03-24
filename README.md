@@ -20,23 +20,28 @@ npm install @echecs/progressive
 
 ```typescript
 import { progressive } from '@echecs/progressive';
+import type { Game, GameKind } from '@echecs/progressive';
 
 // games[n] = round n+1; Game has no `round` field
-const games = [
+const games: Game[][] = [
   [{ black: 'B', result: 1, white: 'A' }], // round 1 → running: 1
   [{ black: 'C', result: 0.5, white: 'A' }], // round 2 → running: 1.5
   [{ black: 'A', result: 0, white: 'D' }], // round 3 → running: 1.5
+  // Unplayed rounds use kind to classify the bye type
+  [{ black: '', kind: 'half-bye', result: 0.5, white: 'A' }], // round 4 → running: 2
 ];
 
 const score = progressive('A', games);
-// 1 + 1.5 + 1.5 = 4
+// 1 + 1.5 + 1.5 + 2 = 6
 ```
 
 ## API
 
 All functions accept `(playerId: string, games: Game[][], players?: Player[])`
 and return `number`. Round is determined by array position: `games[0]` = round
-1, `games[1]` = round 2, etc. The `Game` type has no `round` field.
+1, `games[1]` = round 2, etc. The `Game` type has no `round` field. The optional
+`kind?: GameKind` field on `Game` identifies unplayed rounds (byes score their
+awarded points for the running total).
 
 ### `progressive(playerId, games, players?)`
 
