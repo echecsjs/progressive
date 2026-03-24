@@ -20,8 +20,12 @@ Pure calculation library, no runtime dependencies. Exports two functions:
 All functions conform to the signature:
 
 ```ts
-(playerId: string, players: Player[], games: Game[]) => number;
+(playerId: string, games: Game[][], players?: Player[]) => number;
 ```
+
+`Game[][]` is a round-indexed structure: `games[0]` contains round-1 games,
+`games[1]` contains round-2 games, and so on. The `Game` type no longer has a
+`round` field — round is determined by array position.
 
 FIDE reference: https://handbook.fide.com/chapter/TieBreakRegulations032026
 (section 7.5 — Progressive Score)
@@ -76,8 +80,9 @@ pnpm lint && pnpm test && pnpm build
 - Progressive score is computed by summing the player's running score after each
   round. A player who scores 1, 0.5, 1 has a running sequence of 1, 1.5, 2.5, so
   the progressive score is `1 + 1.5 + 2.5 = 5`.
-- Games are ordered by round number before accumulating. The implementation must
-  preserve round order even when games are provided in arbitrary order.
+- Games are processed in round order by iterating `games[0]`, `games[1]`, …
+  (round index = array index). The `Game` type has no `round` field; order is
+  structural.
 - `progressiveCut1` removes the final round's cumulative contribution before
   summing. This reduces the influence of the last round on the tiebreak.
 - A `Game` with `blackId: ''` (empty string) represents a **bye**. Byes score as

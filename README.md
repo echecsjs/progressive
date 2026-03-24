@@ -21,10 +21,11 @@ npm install @echecs/progressive
 ```typescript
 import { progressive } from '@echecs/progressive';
 
+// games[n] = round n+1; Game has no `round` field
 const games = [
-  { blackId: 'B', result: 1, round: 1, whiteId: 'A' }, // A wins → running: 1
-  { blackId: 'C', result: 0.5, round: 2, whiteId: 'A' }, // draw → running: 1.5
-  { blackId: 'A', result: 0, round: 3, whiteId: 'D' }, // A loses → running: 1.5
+  [{ blackId: 'B', result: 1, whiteId: 'A' }], // round 1 → running: 1
+  [{ blackId: 'C', result: 0.5, whiteId: 'A' }], // round 2 → running: 1.5
+  [{ blackId: 'A', result: 0, whiteId: 'D' }], // round 3 → running: 1.5
 ];
 
 const score = progressive('A', games);
@@ -33,22 +34,22 @@ const score = progressive('A', games);
 
 ## API
 
-All functions accept `(playerId: string, games: Game[])` and return `number`.
-They are drop-in compatible with the shared `Tiebreak` type
-`(playerId: string, games: Game[], players: Player[]) => number`.
+All functions accept `(playerId: string, games: Game[][], players?: Player[])`
+and return `number`. Round is determined by array position: `games[0]` = round
+1, `games[1]` = round 2, etc. The `Game` type has no `round` field.
 
-### `progressive(playerId, games)`
+### `progressive(playerId, games, players?)`
 
 **FIDE section 7.5** — Progressive score. Accumulates the player's running score
-after each round, then sums all those running totals. Games are sorted by round
-number before accumulating. A player who scores 1, 0.5, 1 across three rounds
-produces a progressive score of `1 + 1.5 + 2.5 = 5`.
+after each round, then sums all those running totals. Rounds are processed in
+array order (`games[0]` = round 1). A player who scores 1, 0.5, 1 across three
+rounds produces a progressive score of `1 + 1.5 + 2.5 = 5`.
 
-### `progressiveCut1(playerId, games)`
+### `progressiveCut1(playerId, games, players?)`
 
 **FIDE section 7.5** — Progressive score excluding the first round. Computes the
-progressive score starting from round 2, skipping the first round's result
-entirely. Returns `0` when no games have been played.
+progressive score starting from round 2 (`games[1]`), skipping the first round's
+result entirely. Returns `0` when no games have been played.
 
 ## Contributing
 
