@@ -52,9 +52,17 @@ rounds produces a progressive score of `1 + 1.5 + 2.5 = 5`.
 
 ### `progressiveCut1(playerId, games, players?)`
 
-**FIDE section 7.5** — Progressive score excluding the first round. Computes the
-progressive score starting from round 2 (`games[1]`), skipping the first round's
-result entirely. Returns `0` when no games have been played.
+**FIDE section 7.5 + modifier 14.1 Cut-1 (PS-C1)** — Progressive score
+excluding the first round. Round 1 (`games[0]`) is dropped entirely: the running
+total resets to 0 at round 2 and accumulates from there. The cumulative totals
+from rounds 2, 3, … are then summed.
+
+For example, a player who scores 1, 0.5, 1 across three rounds:
+
+- `progressive` running totals: 1, 1.5, 2.5 → sum = **5**
+- `progressiveCut1` running totals (round 1 dropped): 0.5, 1.5 → sum = **2**
+
+Returns `0` when fewer than two rounds have been played.
 
 ## Contributing
 
