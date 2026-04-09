@@ -1,7 +1,6 @@
 # Progressive
 
 [![npm](https://img.shields.io/npm/v/@echecs/progressive)](https://www.npmjs.com/package/@echecs/progressive)
-[![Test](https://github.com/mormubis/progressive/actions/workflows/test.yml/badge.svg)](https://github.com/mormubis/progressive/actions/workflows/test.yml)
 [![Coverage](https://codecov.io/gh/mormubis/progressive/branch/main/graph/badge.svg)](https://codecov.io/gh/mormubis/progressive)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -52,10 +51,10 @@ rounds produces a progressive score of `1 + 1.5 + 2.5 = 5`.
 
 ### `progressiveCut1(playerId, games, players?)`
 
-**FIDE section 7.5 + modifier 14.1 Cut-1 (PS-C1)** — Progressive score
-excluding the first round. Round 1 (`games[0]`) is dropped entirely: the running
-total resets to 0 at round 2 and accumulates from there. The cumulative totals
-from rounds 2, 3, … are then summed.
+**FIDE section 7.5 + modifier 14.1 Cut-1 (PS-C1)** — Progressive score excluding
+the first round. Round 1 (`games[0]`) is dropped entirely: the running total
+resets to 0 at round 2 and accumulates from there. The cumulative totals from
+rounds 2, 3, … are then summed.
 
 For example, a player who scores 1, 0.5, 1 across three rounds:
 
