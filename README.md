@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@echecs/progressive)](https://www.npmjs.com/package/@echecs/progressive)
 [![Coverage](https://codecov.io/gh/echecsjs/progressive/branch/main/graph/badge.svg)](https://codecov.io/gh/echecsjs/progressive)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Spec](https://img.shields.io/badge/Spec-FIDE-green.svg)](SPEC.md)
 
 **Progressive** is a TypeScript library implementing the Progressive Score
 tiebreak for chess tournaments, following the
