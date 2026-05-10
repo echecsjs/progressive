@@ -1,12 +1,16 @@
 import { playerResult } from './utilities.js';
 
-import type { Game } from '@echecs/tournament';
+import type { CompletedRound, Player } from '@echecs/tournament';
 
-function progressive(player: string, games: Game[][]): number {
+function progressive(
+  player: string,
+  rounds: CompletedRound[],
+  _players: Player[],
+): number {
   let cumulative = 0;
   let total = 0;
-  for (const round of games) {
-    cumulative += playerResult(player, round);
+  for (const round of rounds) {
+    cumulative += playerResult(player, round.games);
     total += cumulative;
   }
   return total;
@@ -14,4 +18,10 @@ function progressive(player: string, games: Game[][]): number {
 
 export { progressive, progressive as tiebreak };
 
-export type { Game, GameKind, Player, Result } from '@echecs/tournament';
+export type {
+  Bye,
+  CompletedRound,
+  Game,
+  Pairing,
+  Player,
+} from '@echecs/tournament';
