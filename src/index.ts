@@ -1,12 +1,8 @@
 import { playerResult } from './utilities.js';
 
-import type { CompletedRound, Player } from '@echecs/tournament';
+import type { Tiebreak } from '@echecs/tournament';
 
-function progressive(
-  player: string,
-  rounds: CompletedRound[],
-  _players: Player[],
-): number {
+const progressive: Tiebreak = (player, rounds, _players) => {
   let cumulative = 0;
   let total = 0;
   for (const round of rounds) {
@@ -14,7 +10,7 @@ function progressive(
     total += cumulative;
   }
   return total;
-}
+};
 
 export { progressive, progressive as tiebreak };
 
