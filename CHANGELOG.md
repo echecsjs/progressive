@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.1.0] - 2026-08-30
+
+### Added
+
+- `@echecs/progressive/cut2` — Progressive Scores Cut-2 (FIDE C.07 7.5 + 14.2)
+
 ## [3.0.2] - 2026-04-17
 
 ### Fixed

@@ -74,6 +74,24 @@ import { progressiveCut1, tiebreak } from '@echecs/progressive/cut1';
 
 Also exported as `tiebreak` from `@echecs/progressive/cut1`.
 
+### `progressiveCut2(player, games)`
+
+**FIDE section 7.5 + modifier 14.2 Cut-2 (PS-C2)** — Progressive score with the
+two lowest cumulative totals discarded. Cumulative running totals are computed
+as for `progressive`, then sorted and the two lowest are cut before summing. A
+player who scores 1, 0.5, 1 across three rounds has cumulative totals of 1, 1.5,
+2.5; cutting the two lowest leaves **2.5**.
+
+Returns `0` when fewer than three rounds have been played.
+
+Import from the `/cut2` subpath:
+
+```typescript
+import { progressiveCut2, tiebreak } from '@echecs/progressive/cut2';
+```
+
+Also exported as `tiebreak` from `@echecs/progressive/cut2`.
+
 ## Exports
 
 ### `@echecs/progressive`
@@ -97,6 +115,18 @@ Also exported as `tiebreak` from `@echecs/progressive/cut1`.
 | `GameKind`        | type     | Unplayed-round classifier (`'half-bye'`, etc.) |
 | `Player`          | type     | Player shape (`{ id: string }`)                |
 | `Result`          | type     | Score value (`0 \| 0.5 \| 1`)                  |
+
+### `@echecs/progressive/cut2`
+
+| Export            | Kind     | Description                                         |
+| ----------------- | -------- | --------------------------------------------------- |
+| `progressiveCut2` | function | Progressive score cutting two lowest totals (PS-C2) |
+| `tiebreak`        | function | Alias for `progressiveCut2`                         |
+| `Bye`             | type     | Unplayed-round record type                          |
+| `CompletedRound`  | type     | A completed round with games and byes               |
+| `Game`            | type     | A single chess game with result and players         |
+| `Pairing`         | type     | A pairing record                                    |
+| `Player`          | type     | Player shape (`{ id: string }`)                     |
 
 ## Contributing
 
